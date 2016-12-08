@@ -1,6 +1,6 @@
 package ru.roborox.itunesconnect.api.login;
 
-import org.apache.commons.lang3.tuple.Pair;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.fluent.Executor;
@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import org.json.JSONObject;
 import ru.roborox.itunesconnect.api.Const;
+import ru.roborox.itunesconnect.api.model.AuthServiceConfig;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class ItunesConnectLoginApi {
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ConnectTokens login(String login, String password) throws IOException, URISyntaxException {
         final TokensCookieStore cookieStore = new TokensCookieStore();
@@ -36,8 +38,8 @@ public class ItunesConnectLoginApi {
     }
 
     private void connect(Executor executor, String login, String password) throws IOException, URISyntaxException {
-        final Pair<String, String> config = getConfig(executor);
-        signin(executor, config.getRight(), config.getLeft(), login, password);
+        final AuthServiceConfig config = getConfig(executor);
+        signin(executor, config.getAuthServiceUrl(), config.getAuthServiceKey(), login, password);
         session(executor);
     }
 
@@ -53,10 +55,9 @@ public class ItunesConnectLoginApi {
         executor.execute(Request.Get(Const.OLYMPUS_URL + Const.SESSION_PATH));
     }
 
-    private Pair<String, String> getConfig(Executor executor) throws URISyntaxException, IOException {
+    private AuthServiceConfig getConfig(Executor executor) throws URISyntaxException, IOException {
         final URI configUrl = new URIBuilder(Const.OLYMPUS_URL + Const.APP_CONFIG_PATH).addParameter("hostname", Const.ITUNESCONNECT_HOSTNAME).build();
-        final JSONObject config = new JSONObject(executor.execute(Request.Get(configUrl)).returnContent().asString());
-        return Pair.of(config.getString("authServiceKey"), config.getString("authServiceUrl"));
+        return objectMapper.readValue(executor.execute(Request.Get(configUrl)).returnContent().asString(), AuthServiceConfig.class);
     }
 
     private Executor createExecutor(CookieStore cookieStore) {
