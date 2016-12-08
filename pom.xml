@@ -14,6 +14,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>roborox-releases</id>
+            <url>${roborox.nexus.url}/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>roborox-snapshots</id>
+            <url>${roborox.nexus.url}/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <testResources>
             <testResource>
