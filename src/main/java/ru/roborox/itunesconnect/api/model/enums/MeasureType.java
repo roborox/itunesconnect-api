@@ -7,23 +7,28 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public enum TimeSeriesMeasure {
+public enum MeasureType {
     SALES("sales"),
     PAGE_VIEW_UNIQUE("pageViewUnique"),
     IMPRESSIONS_TOTAL_UNIQUE("impressionsTotalUnique"),
+    IMPRESSIONS_TOTAL("impressionsTotal"),
     UNITS("units"),
+    IAP("iap"),
+    ACTIVE_DEVICES("activeDevices"),
+    SESSIONS("sessions"),
+    CRASHES("crashes"),
     PAYING_USERS("payingUsers");
 
     private final String id;
-    private static final Map<String, TimeSeriesMeasure> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(TimeSeriesMeasure::getId, e -> e));
+    private static final Map<String, MeasureType> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(MeasureType::getId, e -> e));
 
-    TimeSeriesMeasure(String id) {
+    MeasureType(String id) {
         this.id = id;
     }
 
     @JsonCreator
-    public static TimeSeriesMeasure fromId(String id) {
-        final TimeSeriesMeasure result = ID_MAP.get(id);
+    public static MeasureType fromId(String id) {
+        final MeasureType result = ID_MAP.get(id);
         if (result == null) {
             throw new IllegalArgumentException("id " + id + " not supported");
         }

@@ -6,10 +6,7 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.entity.ContentType;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
-import ru.roborox.itunesconnect.api.model.AppResponse;
-import ru.roborox.itunesconnect.api.model.TimeSeriesRequest;
-import ru.roborox.itunesconnect.api.model.TimeSeriesResponse;
-import ru.roborox.itunesconnect.api.model.UserInfo;
+import ru.roborox.itunesconnect.api.model.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -47,6 +44,10 @@ public class ItunesAnalyticsApi {
 
     public TimeSeriesResponse getTimeSeries(TimeSeriesRequest request) throws IOException {
         return execute(post("/data/time-series", request), TimeSeriesResponse.class);
+    }
+
+    public MeasuresResponse getMeasures(MeasuresRequest request) throws IOException {
+        return execute(post("/data/app/detail/measures", request), MeasuresResponse.class);
     }
 
     private <T> T execute(Request request, Class<T> tClass) throws IOException {

@@ -1,11 +1,11 @@
 package ru.roborox.itunesconnect.api.model;
 
-import ru.roborox.itunesconnect.api.model.enums.TimeSeriesMeasure;
+import ru.roborox.itunesconnect.api.model.enums.MeasureType;
 
 public class TimeSeriesTotals {
     private int value;
     private String type;
-    private TimeSeriesMeasure key;
+    private MeasureType key;
 
     public int getValue() {
         return value;
@@ -23,11 +23,11 @@ public class TimeSeriesTotals {
         this.type = type;
     }
 
-    public TimeSeriesMeasure getKey() {
+    public MeasureType getKey() {
         return key;
     }
 
-    public void setKey(TimeSeriesMeasure key) {
+    public void setKey(MeasureType key) {
         this.key = key;
     }
 }
