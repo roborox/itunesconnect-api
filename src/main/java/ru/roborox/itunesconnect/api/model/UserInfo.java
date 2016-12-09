@@ -1,5 +1,6 @@
 package ru.roborox.itunesconnect.api.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class UserInfo {
@@ -14,8 +15,8 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(List<ContentProvider> contentProviders) {
-        this.contentProviders = contentProviders;
+    public UserInfo(ContentProvider... contentProviders) {
+        this.contentProviders = Arrays.asList(contentProviders);
     }
 
     public String getFirstName() {
