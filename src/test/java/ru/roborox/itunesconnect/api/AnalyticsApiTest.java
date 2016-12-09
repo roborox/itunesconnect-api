@@ -27,23 +27,25 @@ public class AnalyticsApiTest extends AbstractAnalyticsApiTest {
     @Test
     public void getTimeSeries() throws IOException {
         final App firstApp = getFirstApp();
-        final TimeSeriesResponse timeSeries = getApi().getTimeSeries(new TimeSeriesRequest(new String[]{firstApp.getAdamId()}, Period.DAY, new MeasureType[]{MeasureType.IMPRESSIONS_TOTAL_UNIQUE}, DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5), null, new String[0]));
+        final TimeSeriesResponse timeSeries = getApi().getTimeSeries(new TimeSeriesRequest(firstApp.getAdamId(), Period.DAY, new MeasureType[]{MeasureType.IMPRESSIONS_TOTAL_UNIQUE}, DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5), null, new String[0]));
         assertTrue(timeSeries.getSize() != 0);
     }
 
     @Test
     public void getAllMeasures() throws IOException {
         final App firstApp = getFirstApp();
-        final List<Measures> results = getApi().getMeasures(new MeasuresRequest(new String[]{firstApp.getAdamId()}, Period.DAY, MeasureType.values(), DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5))).getResults();
+        final List<Measures> results = getApi().getMeasures(new MeasuresRequest(firstApp.getAdamId(), Period.DAY, MeasureType.values(), DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5))).getResults();
         assertEquals(results.size(), MeasureType.values().length);
     }
 
     private App getFirstApp() throws IOException {
-        getApi().setProvider(userInfo.getContentProviders().get(0).getProviderId());
+        return getApps().get(0);
+    }
 
+    private List<App> getApps() throws IOException {
+        getApi().setProvider(userInfo.getContentProviders().get(0).getProviderId());
         final AppResponse apps = getApi().getApps();
         assertTrue(apps.getSize() != 0);
-
-        return apps.getResults().get(0);
+        return apps.getResults();
     }
 }

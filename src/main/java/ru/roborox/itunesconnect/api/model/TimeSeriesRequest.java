@@ -12,7 +12,7 @@ public class TimeSeriesRequest extends MeasuresRequest {
     public TimeSeriesRequest() {
     }
 
-    public TimeSeriesRequest(String[] adamId, Period frequency, MeasureType[] measures, Date startTime, Date endTime, String group, String[] dimensionFilters) {
+    public TimeSeriesRequest(String adamId, Period frequency, MeasureType[] measures, Date startTime, Date endTime, String group, String[] dimensionFilters) {
         super(adamId, frequency, measures, startTime, endTime);
         this.group = group;
         this.dimensionFilters = dimensionFilters;
