@@ -10,7 +10,8 @@ public abstract class AbstractAnalyticsApiTest extends ApiTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        api = new ItunesAnalyticsApi("https://analytics.itunes.apple.com/analytics/api/v1", new ItunesConnectLoginApi().login(getLogin(), getPassword()));
+        final ItunesConnectLoginApi itunesConnectLoginApi = new ItunesConnectLoginApi(Const.ITUNESCONNECT_HOSTNAME, Const.OLYMPUS_URL);
+        api = new ItunesAnalyticsApi(Const.ANALYTICS_URL, itunesConnectLoginApi.login(getLogin(), getPassword()));
     }
 
     public ItunesAnalyticsApi getApi() {

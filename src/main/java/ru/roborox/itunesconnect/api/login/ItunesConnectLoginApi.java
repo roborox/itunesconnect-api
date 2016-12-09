@@ -14,7 +14,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import org.json.JSONObject;
-import ru.roborox.itunesconnect.api.Const;
 import ru.roborox.itunesconnect.api.model.AuthServiceConfig;
 
 import java.io.IOException;
@@ -23,7 +22,18 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class ItunesConnectLoginApi {
+    public static final String SIGNIN_PATH = "/auth/signin";
+    public static final String APP_CONFIG_PATH = "/app/config";
+    public static final String SESSION_PATH = "/session";
+
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final String itunesConnectHostname;
+    private final String olympusUrl;
+
+    public ItunesConnectLoginApi(String itunesConnectHostname, String olympusUrl) {
+        this.itunesConnectHostname = itunesConnectHostname;
+        this.olympusUrl = olympusUrl;
+    }
 
     public ConnectTokens login(String login, String password) throws IOException, URISyntaxException {
         final TokensCookieStore cookieStore = new TokensCookieStore();
@@ -48,15 +58,15 @@ public class ItunesConnectLoginApi {
                 .put("accountName", login)
                 .put("password", password)
                 .put("rememberMe", false);
-        executor.execute(Request.Post(authServiceUrl + Const.SIGNIN_PATH).bodyString(signinData.toString(), ContentType.APPLICATION_JSON).addHeader("X-Apple-Widget-Key", authServiceKey));
+        executor.execute(Request.Post(authServiceUrl + SIGNIN_PATH).bodyString(signinData.toString(), ContentType.APPLICATION_JSON).addHeader("X-Apple-Widget-Key", authServiceKey));
     }
 
     private void session(Executor executor) throws IOException {
-        executor.execute(Request.Get(Const.OLYMPUS_URL + Const.SESSION_PATH));
+        executor.execute(Request.Get(olympusUrl + SESSION_PATH));
     }
 
     private AuthServiceConfig getConfig(Executor executor) throws URISyntaxException, IOException {
-        final URI configUrl = new URIBuilder(Const.OLYMPUS_URL + Const.APP_CONFIG_PATH).addParameter("hostname", Const.ITUNESCONNECT_HOSTNAME).build();
+        final URI configUrl = new URIBuilder(olympusUrl + APP_CONFIG_PATH).addParameter("hostname", itunesConnectHostname).build();
         return objectMapper.readValue(executor.execute(Request.Get(configUrl)).returnContent().asString(), AuthServiceConfig.class);
     }
 
