@@ -2,6 +2,7 @@ package ru.roborox.itunesconnect.api.model;
 
 import ru.roborox.itunesconnect.api.model.enums.MeasureType;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Measures {
@@ -13,6 +14,13 @@ public class Measures {
     private double percentChange;
     private List<MeasuresData> data;
     private boolean meetsThreshold;
+
+    public Measures() {
+    }
+
+    public Measures(MeasuresData... data) {
+        this.data = Arrays.asList(data);
+    }
 
     public String getAdamId() {
         return adamId;

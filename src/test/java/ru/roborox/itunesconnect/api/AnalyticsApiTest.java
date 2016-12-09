@@ -25,13 +25,6 @@ public class AnalyticsApiTest extends AbstractAnalyticsApiTest {
     }
 
     @Test
-    public void getTimeSeries() throws IOException {
-        final App firstApp = getFirstApp();
-        final TimeSeriesResponse timeSeries = getApi().getTimeSeries(new TimeSeriesRequest(firstApp.getAdamId(), Period.DAY, new MeasureType[]{MeasureType.IMPRESSIONS_TOTAL_UNIQUE}, DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5), null, new String[0]));
-        assertTrue(timeSeries.getSize() != 0);
-    }
-
-    @Test
     public void getAllMeasures() throws IOException {
         final App firstApp = getFirstApp();
         final List<Measures> results = getApi().getMeasures(new MeasuresRequest(firstApp.getAdamId(), Period.DAY, MeasureType.values(), DateUtils.addDays(new Date(), -35), DateUtils.addDays(new Date(), -5))).getResults();

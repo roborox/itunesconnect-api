@@ -6,6 +6,14 @@ public class MeasuresData {
     private Date date;
     private double value;
 
+    public MeasuresData() {
+    }
+
+    public MeasuresData(Date date, double value) {
+        this.date = date;
+        this.value = value;
+    }
+
     public Date getDate() {
         return date;
     }

@@ -42,10 +42,6 @@ public class ItunesAnalyticsApi {
         execute(get("/settings/provider/" + providerId));
     }
 
-    public TimeSeriesResponse getTimeSeries(TimeSeriesRequest request) throws IOException {
-        return execute(post("/data/time-series", request), TimeSeriesResponse.class);
-    }
-
     public MeasuresResponse getMeasures(MeasuresRequest request) throws IOException {
         return execute(post("/data/app/detail/measures", request), MeasuresResponse.class);
     }

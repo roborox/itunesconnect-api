@@ -14,6 +14,14 @@ public class App {
     private boolean enabled;
     private int appOptInRate;
 
+    public App() {
+    }
+
+    public App(String name, String adamId) {
+        this.name = name;
+        this.adamId = adamId;
+    }
+
     public String getName() {
         return name;
     }

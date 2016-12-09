@@ -3,6 +3,7 @@ package ru.roborox.itunesconnect.api.model;
 import ru.roborox.itunesconnect.api.model.enums.MeasureType;
 import ru.roborox.itunesconnect.api.model.enums.Period;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class MeasuresRequest {
@@ -61,5 +62,31 @@ public class MeasuresRequest {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MeasuresRequest that = (MeasuresRequest) o;
+
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(adamId, that.adamId)) return false;
+        if (frequency != that.frequency) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(measures, that.measures)) return false;
+        if (!startTime.equals(that.startTime)) return false;
+        return endTime.equals(that.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(adamId);
+        result = 31 * result + frequency.hashCode();
+        result = 31 * result + Arrays.hashCode(measures);
+        result = 31 * result + startTime.hashCode();
+        result = 31 * result + endTime.hashCode();
+        return result;
     }
 }
