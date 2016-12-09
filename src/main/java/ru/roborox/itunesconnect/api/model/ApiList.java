@@ -1,10 +1,19 @@
 package ru.roborox.itunesconnect.api.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ApiList<T> {
     private int size;
     private List<T> results;
+
+    public ApiList() {
+    }
+
+    public ApiList(int size, T... results) {
+        this.size = size;
+        this.results = Arrays.asList(results);
+    }
 
     public int getSize() {
         return size;
