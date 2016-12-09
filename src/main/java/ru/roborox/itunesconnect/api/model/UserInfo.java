@@ -11,6 +11,13 @@ public class UserInfo {
     private String userName;
     private List<ContentProvider> contentProviders;
 
+    public UserInfo() {
+    }
+
+    public UserInfo(List<ContentProvider> contentProviders) {
+        this.contentProviders = contentProviders;
+    }
+
     public String getFirstName() {
         return firstName;
     }

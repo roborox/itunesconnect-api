@@ -4,6 +4,14 @@ public class ContentProvider {
     private String providerId;
     private String providerName;
 
+    public ContentProvider() {
+    }
+
+    public ContentProvider(String providerId, String providerName) {
+        this.providerId = providerId;
+        this.providerName = providerName;
+    }
+
     public String getProviderId() {
         return providerId;
     }
