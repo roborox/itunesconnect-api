@@ -18,7 +18,8 @@ public class Measures {
     public Measures() {
     }
 
-    public Measures(MeasuresData... data) {
+    public Measures(MeasureType measure, MeasuresData... data) {
+        this.measure = measure;
         this.data = Arrays.asList(data);
     }
 
