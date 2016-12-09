@@ -20,6 +20,7 @@ public class App {
     public App(String name, String adamId) {
         this.name = name;
         this.adamId = adamId;
+        this.enabled = true;
     }
 
     public String getName() {
