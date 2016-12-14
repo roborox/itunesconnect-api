@@ -13,8 +13,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
-import org.json.JSONObject;
 import ru.roborox.itunesconnect.api.model.AuthServiceConfig;
+import ru.roborox.itunesconnect.api.model.SigninRequest;
 
 import java.io.IOException;
 import java.net.URI;
@@ -54,11 +54,8 @@ public class ItunesConnectLoginApi {
     }
 
     private void signin(Executor executor, String authServiceUrl, String authServiceKey, String login, String password) throws IOException {
-        final JSONObject signinData = new JSONObject()
-                .put("accountName", login)
-                .put("password", password)
-                .put("rememberMe", false);
-        executor.execute(Request.Post(authServiceUrl + SIGNIN_PATH).bodyString(signinData.toString(), ContentType.APPLICATION_JSON).addHeader("X-Apple-Widget-Key", authServiceKey));
+        final SigninRequest request = new SigninRequest(login, password, false);
+        executor.execute(Request.Post(authServiceUrl + SIGNIN_PATH).bodyString(objectMapper.writeValueAsString(request), ContentType.APPLICATION_JSON).addHeader("X-Apple-Widget-Key", authServiceKey));
     }
 
     private void session(Executor executor) throws IOException {
