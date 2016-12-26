@@ -80,7 +80,7 @@ public class ItunesAnalyticsApi {
     }
 
     private <T> T execute(Request request, Class<T> tClass) throws IOException {
-        return objectMapper.readValue(execute(request).returnContent().asString(), tClass);
+        return objectMapper.readValue(new String(execute(request).returnContent().asBytes(), Const.UTF_8), tClass);
     }
 
     private Request get(String path) {

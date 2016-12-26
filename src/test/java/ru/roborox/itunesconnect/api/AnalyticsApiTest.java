@@ -36,9 +36,13 @@ public class AnalyticsApiTest extends AbstractAnalyticsApiTest {
     }
 
     private List<App> getApps() throws IOException {
-        getApi().setProvider(userInfo.getContentProviders().get(0).getProviderId());
+        final List<ContentProvider> providers = userInfo.getContentProviders();
+        getApi().setProvider(providers.get(providers.size() - 1).getProviderId());
         final AppResponse apps = getApi().getApps();
         assertTrue(apps.getSize() != 0);
+        for (App app : apps.getResults()) {
+            System.out.println(app.getName());
+        }
         return apps.getResults();
     }
 }
