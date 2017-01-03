@@ -18,16 +18,14 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
-import ru.roborox.itunesconnect.api.model.AppResponse;
-import ru.roborox.itunesconnect.api.model.MeasuresRequest;
-import ru.roborox.itunesconnect.api.model.MeasuresResponse;
-import ru.roborox.itunesconnect.api.model.UserInfo;
+import ru.roborox.itunesconnect.api.model.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 /**
  * analytics.itunes.apple.com java api
@@ -76,7 +74,15 @@ public class ItunesAnalyticsApi {
     }
 
     public MeasuresResponse getMeasures(MeasuresRequest request) throws IOException {
-        return execute(post("/data/app/detail/measures", request), MeasuresResponse.class);
+        final MeasuresResponse response = execute(post("/data/app/detail/measures", request), MeasuresResponse.class);
+        if (response.getResults() != null) {
+            for (Measures measures : response.getResults()) {
+                if (measures.getData() != null) {
+                    measures.setData(measures.getData().stream().filter(d -> d.getValue() != -1).collect(Collectors.toList()));
+                }
+            }
+        }
+        return response;
     }
 
     private <T> T execute(Request request, Class<T> tClass) throws IOException {
