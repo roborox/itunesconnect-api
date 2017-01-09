@@ -1,7 +1,7 @@
-package ru.roborox.itunesconnect.api.model;
+package ru.roborox.itunesconnect.api.analytics.model;
 
-import ru.roborox.itunesconnect.api.model.enums.MeasureType;
-import ru.roborox.itunesconnect.api.model.enums.Period;
+import ru.roborox.itunesconnect.api.analytics.model.enums.MeasureType;
+import ru.roborox.itunesconnect.api.analytics.model.enums.Period;
 
 import java.util.Arrays;
 import java.util.Date;

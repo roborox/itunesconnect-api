@@ -1,4 +1,4 @@
-package ru.roborox.itunesconnect.api;
+package ru.roborox.itunesconnect.api.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,31 +17,25 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
+import ru.roborox.itunesconnect.api.Const;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
-import ru.roborox.itunesconnect.api.model.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
 
-/**
- * analytics.itunes.apple.com java api
- * NOT THREAD SAFE
- */
-public class ItunesAnalyticsApi {
+public class AbstractAppleApi {
     private final ObjectMapper objectMapper;
     private final Executor executor;
+    private final String url;
 
-    private final String analyticsUrl;
-
-    public ItunesAnalyticsApi(String analyticsUrl, ConnectTokens tokens) throws MalformedURLException {
-        this.analyticsUrl = analyticsUrl;
+    public AbstractAppleApi(String url, ConnectTokens tokens, String dateFormatString) throws MalformedURLException {
+        this.url = url;
 
         this.objectMapper = new ObjectMapper();
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         this.objectMapper.setDateFormat(dateFormat);
         this.executor = createExecutor(createCookieStore(tokens));
@@ -57,49 +51,25 @@ public class ItunesAnalyticsApi {
     private Cookie createCookie(String name, String value) throws MalformedURLException {
         final BasicClientCookie cookie = new BasicClientCookie(name, value);
         cookie.setPath("/");
-        cookie.setDomain(new URL(analyticsUrl).getHost());
+        cookie.setDomain(new URL(url).getHost());
         return cookie;
     }
 
-    public UserInfo getUserInfo() throws IOException {
-        return execute(get("/settings/user-info"), UserInfo.class);
+    protected <T> T execute(Request request, Class<T> tClass) throws IOException {
+        final String content = new String(execute(request).returnContent().asBytes(), Const.UTF_8);
+        return objectMapper.readValue(content, tClass);
     }
 
-    public AppResponse getApps() throws IOException {
-        return execute(get("/app-info/app"), AppResponse.class);
+    protected Request get(String path) {
+        return Request.Get(url + path);
     }
 
-    public void setProvider(String providerId) throws IOException {
-        execute(get("/settings/provider/" + providerId));
+    protected Request post(String path, Object request) throws JsonProcessingException {
+        return Request.Post(url + path).bodyString(objectMapper.writeValueAsString(request), ContentType.APPLICATION_JSON);
     }
 
-    public MeasuresResponse getMeasures(MeasuresRequest request) throws IOException {
-        final MeasuresResponse response = execute(post("/data/app/detail/measures", request), MeasuresResponse.class);
-        if (response.getResults() != null) {
-            for (Measures measures : response.getResults()) {
-                if (measures.getData() != null) {
-                    measures.setData(measures.getData().stream().filter(d -> d.getValue() != -1).collect(Collectors.toList()));
-                }
-            }
-        }
-        return response;
-    }
-
-    private <T> T execute(Request request, Class<T> tClass) throws IOException {
-        return objectMapper.readValue(new String(execute(request).returnContent().asBytes(), Const.UTF_8), tClass);
-    }
-
-    private Request get(String path) {
-        return Request.Get(analyticsUrl + path);
-    }
-
-    private Request post(String path, Object request) throws JsonProcessingException {
-        return Request.Post(analyticsUrl + path).bodyString(objectMapper.writeValueAsString(request), ContentType.APPLICATION_JSON);
-    }
-
-    private Response execute(Request request) throws IOException {
+    protected Response execute(Request request) throws IOException {
         return executor.execute(request
-                //.addHeader("Cookie", "itctx=" + tokens.getItctx() + ";myacinfo" + "=" + tokens.getMyacinfo())
                 .addHeader("X-Requested-By", "analytics.itunes.apple.com")
                 .addHeader("Accept", "application/json, text/plain, */*"));
     }
@@ -110,4 +80,5 @@ public class ItunesAnalyticsApi {
         final CloseableHttpClient client = HttpClients.custom().setDefaultCookieSpecRegistry(cookieSpecRegistry).build();
         return Executor.newInstance(client).use(cookieStore);
     }
+
 }

@@ -13,8 +13,8 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
-import ru.roborox.itunesconnect.api.model.AuthServiceConfig;
-import ru.roborox.itunesconnect.api.model.SigninRequest;
+import ru.roborox.itunesconnect.api.analytics.model.AuthServiceConfig;
+import ru.roborox.itunesconnect.api.analytics.model.SigninRequest;
 
 import java.io.IOException;
 import java.net.URI;

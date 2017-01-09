@@ -1,4 +1,4 @@
-package ru.roborox.itunesconnect.api.model;
+package ru.roborox.itunesconnect.api.analytics.model;
 
 public class AppResponse extends ApiList<App> {
     public AppResponse() {

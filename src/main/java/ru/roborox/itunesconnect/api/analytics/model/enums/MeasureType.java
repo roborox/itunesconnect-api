@@ -1,4 +1,4 @@
-package ru.roborox.itunesconnect.api.model.enums;
+package ru.roborox.itunesconnect.api.analytics.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

@@ -1,8 +1,6 @@
-package ru.roborox.itunesconnect.api.model;
+package ru.roborox.itunesconnect.api.analytics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
 
 public class App {
     private String name;
