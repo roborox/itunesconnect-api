@@ -4,13 +4,14 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.roborox.itunesconnect.api.analytics.model.*;
-import ru.roborox.itunesconnect.api.analytics.model.enums.MeasureType;
+import ru.roborox.itunesconnect.api.analytics.model.enums.AnalyticsMeasure;
 import ru.roborox.itunesconnect.api.analytics.model.enums.Period;
 import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesFilter;
 import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesRequest;
 import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesResponse;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Dimension;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
+import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Sort;
 
 import java.io.IOException;
@@ -35,11 +36,11 @@ public class ItunesConnectApiTest extends AbstractItunesConnectApiTest {
         final App firstApp = getFirstApp();
         final Date start = DateUtils.addDays(new Date(), -35);
         final Date end = new Date();
-        final List<Measures> results = getAnalyticsApi().getMeasures(new MeasuresRequest(firstApp.getAdamId(), Period.DAY, MeasureType.values(), start, end)).getResults();
-        assertEquals(results.size(), MeasureType.values().length);
+        final List<Measures> results = getAnalyticsApi().getMeasures(new MeasuresRequest(firstApp.getAdamId(), Period.DAY, AnalyticsMeasure.values(), start, end)).getResults();
+        assertEquals(results.size(), AnalyticsMeasure.values().length);
 
         final TimeSeriesFilter filter = new TimeSeriesFilter(Dimension.CONTENT, "1177085726");
-        final TimeSeriesResponse timeSeries = getReportingApi().getTimeSeries(new TimeSeriesRequest(Interval.DAY, Dimension.CONTENT, start, end, Sort.ASCENDING, 100, filter, ru.roborox.itunesconnect.api.reporting.model.enums.MeasureType.ROYALTY_UTC));
+        final TimeSeriesResponse timeSeries = getReportingApi().getTimeSeries(new TimeSeriesRequest(Interval.DAY, Dimension.CONTENT, start, end, Sort.ASCENDING, 100, filter, ReportingMeasure.ROYALTY_UTC));
         System.out.println(timeSeries);
         assertTrue(timeSeries.getData().length != 0);
         assertEquals(timeSeries.getMetadata().getKey(), "1177085726");

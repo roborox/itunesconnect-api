@@ -2,7 +2,7 @@ package ru.roborox.itunesconnect.api.reporting.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import ru.roborox.itunesconnect.api.reporting.deserializer.TimeSeriesDataDeserializer;
-import ru.roborox.itunesconnect.api.reporting.model.enums.MeasureType;
+import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
 
 import java.util.Date;
 import java.util.Map;
@@ -10,9 +10,9 @@ import java.util.Map;
 @JsonDeserialize(using = TimeSeriesDataDeserializer.class)
 public class TimeSeriesData {
     private Date date;
-    private Map<MeasureType, Double> data;
+    private Map<ReportingMeasure, Double> data;
 
-    public TimeSeriesData(Date date, Map<MeasureType, Double> data) {
+    public TimeSeriesData(Date date, Map<ReportingMeasure, Double> data) {
         this.date = date;
         this.data = data;
     }
@@ -25,11 +25,11 @@ public class TimeSeriesData {
         this.date = date;
     }
 
-    public Map<MeasureType, Double> getData() {
+    public Map<ReportingMeasure, Double> getData() {
         return data;
     }
 
-    public void setData(Map<MeasureType, Double> data) {
+    public void setData(Map<ReportingMeasure, Double> data) {
         this.data = data;
     }
 

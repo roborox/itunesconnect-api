@@ -1,6 +1,6 @@
 package ru.roborox.itunesconnect.api.analytics.model;
 
-import ru.roborox.itunesconnect.api.analytics.model.enums.MeasureType;
+import ru.roborox.itunesconnect.api.analytics.model.enums.AnalyticsMeasure;
 import ru.roborox.itunesconnect.api.analytics.model.enums.Period;
 
 import java.util.Arrays;
@@ -9,14 +9,14 @@ import java.util.Date;
 public class MeasuresRequest {
     private String[] adamId;
     private Period frequency;
-    private MeasureType[] measures;
+    private AnalyticsMeasure[] measures;
     private Date startTime;
     private Date endTime;
 
     public MeasuresRequest() {
     }
 
-    public MeasuresRequest(String adamId, Period frequency, MeasureType[] measures, Date startTime, Date endTime) {
+    public MeasuresRequest(String adamId, Period frequency, AnalyticsMeasure[] measures, Date startTime, Date endTime) {
         this.adamId = new String[]{adamId};
         this.frequency = frequency;
         this.measures = measures;
@@ -40,11 +40,11 @@ public class MeasuresRequest {
         this.frequency = frequency;
     }
 
-    public MeasureType[] getMeasures() {
+    public AnalyticsMeasure[] getMeasures() {
         return measures;
     }
 
-    public void setMeasures(MeasureType[] measures) {
+    public void setMeasures(AnalyticsMeasure[] measures) {
         this.measures = measures;
     }
 

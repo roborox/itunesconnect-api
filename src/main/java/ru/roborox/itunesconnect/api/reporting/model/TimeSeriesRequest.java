@@ -3,7 +3,7 @@ package ru.roborox.itunesconnect.api.reporting.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Dimension;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
-import ru.roborox.itunesconnect.api.reporting.model.enums.MeasureType;
+import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Sort;
 
 import java.util.Date;
@@ -15,10 +15,10 @@ public class TimeSeriesRequest {
     private Date endDate;
     private Sort sort;
     private int limit;
-    private MeasureType[] measures;
+    private ReportingMeasure[] measures;
     private TimeSeriesFilter[] filters;
 
-    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, MeasureType[] measures, TimeSeriesFilter[] filters) {
+    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, ReportingMeasure[] measures, TimeSeriesFilter[] filters) {
         this.interval = interval;
         this.group = group;
         this.startDate = startDate;
@@ -29,7 +29,7 @@ public class TimeSeriesRequest {
         this.filters = filters;
     }
 
-    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, TimeSeriesFilter filter, MeasureType... measures) {
+    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, TimeSeriesFilter filter, ReportingMeasure... measures) {
         this(interval, group, startDate, endDate, sort, limit, measures, new TimeSeriesFilter[]{filter});
     }
 
@@ -91,11 +91,11 @@ public class TimeSeriesRequest {
         this.limit = limit;
     }
 
-    public MeasureType[] getMeasures() {
+    public ReportingMeasure[] getMeasures() {
         return measures;
     }
 
-    public void setMeasures(MeasureType[] measures) {
+    public void setMeasures(ReportingMeasure[] measures) {
         this.measures = measures;
     }
 }
