@@ -1,5 +1,6 @@
 package ru.roborox.itunesconnect.api.login;
 
+import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.CookieSpecs;
@@ -38,6 +39,7 @@ public class ItunesConnectLoginApi {
     public ItunesConnectLoginApi(String itunesConnectHostname, String olympusUrl) {
         this.itunesConnectHostname = itunesConnectHostname;
         this.olympusUrl = olympusUrl;
+        //this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, )
     }
 
     public ConnectTokens login(String login, String password) throws IOException, URISyntaxException {

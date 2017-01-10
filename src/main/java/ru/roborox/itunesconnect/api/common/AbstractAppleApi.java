@@ -1,6 +1,7 @@
 package ru.roborox.itunesconnect.api.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -35,6 +36,7 @@ public class AbstractAppleApi {
         final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         this.objectMapper.setDateFormat(dateFormat);
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.executor = executor;
     }
 
