@@ -6,6 +6,7 @@ import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
 import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Sort;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class TimeSeriesRequest {
@@ -97,5 +98,37 @@ public class TimeSeriesRequest {
 
     public void setMeasures(ReportingMeasure[] measures) {
         this.measures = measures;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimeSeriesRequest that = (TimeSeriesRequest) o;
+
+        if (limit != that.limit) return false;
+        if (interval != that.interval) return false;
+        if (group != that.group) return false;
+        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
+        if (sort != that.sort) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(measures, that.measures)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(filters, that.filters);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = interval != null ? interval.hashCode() : 0;
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + (sort != null ? sort.hashCode() : 0);
+        result = 31 * result + limit;
+        result = 31 * result + Arrays.hashCode(measures);
+        result = 31 * result + Arrays.hashCode(filters);
+        return result;
     }
 }
