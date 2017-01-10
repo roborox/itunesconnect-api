@@ -52,7 +52,7 @@ public class AbstractAppleApi {
         try {
             entity = response.getEntity();
             in = entity.getContent();
-            final String content = IOUtils.toString(in, Const.UTF_8);
+            final String content = IOUtils.toString(in, "UTF-8");
             if (log) {
                 logger.info("request={} response={} content={}", request, response, content);
             }
