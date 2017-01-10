@@ -16,8 +16,8 @@ public abstract class AbstractItunesConnectApiTest extends ApiTest {
         super.setUp();
         final ItunesConnectLoginApi itunesConnectLoginApi = new ItunesConnectLoginApi(Const.ITUNESCONNECT_HOSTNAME, Const.OLYMPUS_URL);
         final ConnectTokens tokens = itunesConnectLoginApi.login(getLogin(), getPassword());
-        analyticsApi = new ItunesAnalyticsApi(Const.ANALYTICS_URL, tokens);
-        reportingApi = new ReportingApi(Const.REPORTING_URL, tokens);
+        analyticsApi = new ItunesAnalyticsApi(Const.ANALYTICS_URL, tokens, false);
+        reportingApi = new ReportingApi(Const.REPORTING_URL, tokens, false);
     }
 
     public ItunesAnalyticsApi getAnalyticsApi() {

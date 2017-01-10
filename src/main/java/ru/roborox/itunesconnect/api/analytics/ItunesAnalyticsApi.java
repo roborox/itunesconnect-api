@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  */
 public class ItunesAnalyticsApi extends AbstractAppleApi {
 
-    public ItunesAnalyticsApi(String analyticsUrl, ConnectTokens tokens) throws MalformedURLException {
-        super(analyticsUrl, tokens, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public ItunesAnalyticsApi(String analyticsUrl, ConnectTokens tokens, boolean log) throws MalformedURLException {
+        super(analyticsUrl, tokens, "yyyy-MM-dd'T'HH:mm:ss'Z'", log);
     }
 
     public UserInfo getUserInfo() throws IOException {

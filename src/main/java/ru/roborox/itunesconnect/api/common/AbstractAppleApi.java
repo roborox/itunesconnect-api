@@ -17,6 +17,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.roborox.itunesconnect.api.Const;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
 
@@ -27,12 +29,16 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 public class AbstractAppleApi {
+    protected final Logger logger = LoggerFactory.getLogger(AbstractAppleApi.class);
+
     private final ObjectMapper objectMapper;
     private final Executor executor;
     private final String url;
+    private final boolean log;
 
-    public AbstractAppleApi(String url, ConnectTokens tokens, String dateFormatString) throws MalformedURLException {
+    public AbstractAppleApi(String url, ConnectTokens tokens, String dateFormatString, boolean log) throws MalformedURLException {
         this.url = url;
+        this.log = log;
 
         this.objectMapper = new ObjectMapper();
         final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
@@ -57,6 +63,9 @@ public class AbstractAppleApi {
 
     protected <T> T execute(Request request, Class<T> tClass) throws IOException {
         final String content = new String(execute(request).returnContent().asBytes(), Const.UTF_8);
+        if (log) {
+            logger.info("for {} content={}", request, content);
+        }
         return objectMapper.readValue(content, tClass);
     }
 
@@ -80,5 +89,4 @@ public class AbstractAppleApi {
         final CloseableHttpClient client = HttpClients.custom().setDefaultCookieSpecRegistry(cookieSpecRegistry).build();
         return Executor.newInstance(client).use(cookieStore);
     }
-
 }

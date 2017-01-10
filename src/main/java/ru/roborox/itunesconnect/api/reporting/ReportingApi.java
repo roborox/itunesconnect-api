@@ -11,8 +11,8 @@ import java.net.MalformedURLException;
 public class ReportingApi extends AbstractAppleApi {
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    public ReportingApi(String url, ConnectTokens tokens) throws MalformedURLException {
-        super(url, tokens, DATE_FORMAT);
+    public ReportingApi(String url, ConnectTokens tokens, boolean log) throws MalformedURLException {
+        super(url, tokens, DATE_FORMAT, log);
     }
 
     public TimeSeriesResponse getTimeSeries(TimeSeriesRequest request) throws IOException {
