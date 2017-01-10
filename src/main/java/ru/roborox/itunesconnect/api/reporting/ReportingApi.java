@@ -16,6 +16,11 @@ public class ReportingApi extends AbstractAppleApi {
     }
 
     public TimeSeriesResponse getTimeSeries(TimeSeriesRequest request) throws IOException {
-        return execute(post("/data/timeseries", request), TimeSeriesResponse[].class)[0];
+        final TimeSeriesResponse[] result = execute(post("/data/timeseries", request), TimeSeriesResponse[].class);
+        if (result.length > 0) {
+            return result[0];
+        } else {
+            return null;
+        }
     }
 }
