@@ -74,7 +74,11 @@ public class AbstractAppleApi {
     }
 
     protected Request post(String path, Object request) throws JsonProcessingException {
-        return Request.Post(url + path).bodyString(objectMapper.writeValueAsString(request), ContentType.APPLICATION_JSON);
+        final String req = objectMapper.writeValueAsString(request);
+        if (log) {
+            logger.info("post to {} using {}", path, req);
+        }
+        return Request.Post(url + path).bodyString(req, ContentType.APPLICATION_JSON);
     }
 
     protected Response execute(Request request) throws IOException {

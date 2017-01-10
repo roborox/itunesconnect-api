@@ -35,6 +35,7 @@ public class ItunesConnectApiTest extends AbstractItunesConnectApiTest {
     public void getMeasures() throws IOException {
         final App firstApp = getFirstApp();
         final Date start = DateUtils.addDays(new Date(), -120);
+        System.out.println(start);
         final Date end = new Date();
         final List<Measures> results = getAnalyticsApi().getMeasures(new MeasuresRequest(firstApp.getAdamId(), Period.DAY, AnalyticsMeasure.values(), start, end)).getResults();
         assertEquals(results.size(), AnalyticsMeasure.values().length);
