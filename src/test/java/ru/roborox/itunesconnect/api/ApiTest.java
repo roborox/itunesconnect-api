@@ -1,10 +1,14 @@
 package ru.roborox.itunesconnect.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.Properties;
 
 public abstract class ApiTest {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
     private String login;
     private String password;
 

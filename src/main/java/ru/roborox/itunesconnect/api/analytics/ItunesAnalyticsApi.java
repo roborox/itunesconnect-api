@@ -1,5 +1,6 @@
 package ru.roborox.itunesconnect.api.analytics;
 
+import org.apache.http.client.fluent.Executor;
 import ru.roborox.itunesconnect.api.common.AbstractAppleApi;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
 import ru.roborox.itunesconnect.api.analytics.model.*;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
  */
 public class ItunesAnalyticsApi extends AbstractAppleApi {
 
-    public ItunesAnalyticsApi(String analyticsUrl, ConnectTokens tokens, boolean log) throws MalformedURLException {
-        super(analyticsUrl, tokens, "yyyy-MM-dd'T'HH:mm:ss'Z'", log);
+    public ItunesAnalyticsApi(Executor executor, String analyticsUrl, boolean log) throws MalformedURLException {
+        super(executor, analyticsUrl, "yyyy-MM-dd'T'HH:mm:ss'Z'", log);
     }
 
     public UserInfo getUserInfo() throws IOException {

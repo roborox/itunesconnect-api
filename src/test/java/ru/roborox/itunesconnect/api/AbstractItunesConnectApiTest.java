@@ -1,5 +1,6 @@
 package ru.roborox.itunesconnect.api;
 
+import org.apache.http.client.fluent.Executor;
 import org.testng.annotations.BeforeMethod;
 import ru.roborox.itunesconnect.api.analytics.ItunesAnalyticsApi;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
@@ -16,8 +17,10 @@ public abstract class AbstractItunesConnectApiTest extends ApiTest {
         super.setUp();
         final ItunesConnectLoginApi itunesConnectLoginApi = new ItunesConnectLoginApi(Const.ITUNESCONNECT_HOSTNAME, Const.OLYMPUS_URL);
         final ConnectTokens tokens = itunesConnectLoginApi.login(getLogin(), getPassword());
-        analyticsApi = new ItunesAnalyticsApi(Const.ANALYTICS_URL, tokens, false);
-        reportingApi = new ReportingApi(Const.REPORTING_URL, tokens, false);
+        final Executor executor = itunesConnectLoginApi.createExecutor(tokens);
+        logger.info("tokens={}", tokens);
+        analyticsApi = new ItunesAnalyticsApi(executor, Const.ANALYTICS_URL, true);
+        reportingApi = new ReportingApi(executor, Const.REPORTING_URL, true);
     }
 
     public ItunesAnalyticsApi getAnalyticsApi() {

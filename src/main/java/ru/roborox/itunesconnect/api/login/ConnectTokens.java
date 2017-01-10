@@ -16,4 +16,12 @@ public class ConnectTokens {
     public String getMyacinfo() {
         return myacinfo;
     }
+
+    @Override
+    public String toString() {
+        return "ConnectTokens{" +
+                "itctx='" + itctx + '\'' +
+                ", myacinfo='" + myacinfo + '\'' +
+                '}';
+    }
 }
