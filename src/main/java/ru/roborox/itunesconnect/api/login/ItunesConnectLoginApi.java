@@ -1,6 +1,5 @@
 package ru.roborox.itunesconnect.api.login;
 
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.CookieSpecs;
@@ -9,6 +8,7 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.cookie.ClientCookie;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.entity.ContentType;
@@ -39,7 +39,6 @@ public class ItunesConnectLoginApi {
     public ItunesConnectLoginApi(String itunesConnectHostname, String olympusUrl) {
         this.itunesConnectHostname = itunesConnectHostname;
         this.olympusUrl = olympusUrl;
-        //this.objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, )
     }
 
     public ConnectTokens login(String login, String password) throws IOException, URISyntaxException {
@@ -70,6 +69,7 @@ public class ItunesConnectLoginApi {
 
     private Cookie createCookie(String name, String value) throws MalformedURLException {
         final BasicClientCookie cookie = new BasicClientCookie(name, value);
+        cookie.setAttribute(ClientCookie.DOMAIN_ATTR, Const.COOKIE_DOMAIN);
         cookie.setPath("/");
         cookie.setDomain(Const.COOKIE_DOMAIN);
         return cookie;

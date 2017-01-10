@@ -13,6 +13,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.roborox.itunesconnect.api.Const;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +52,7 @@ public class AbstractAppleApi {
         try {
             entity = response.getEntity();
             in = entity.getContent();
-            final String content = IOUtils.toString(in, "UTF-8");
+            final String content = IOUtils.toString(in, Const.UTF_8);
             if (log) {
                 logger.info("request={} response={} content={}", request, response, content);
             }
