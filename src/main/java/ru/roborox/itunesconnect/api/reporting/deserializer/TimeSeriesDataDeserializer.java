@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.DoubleNode;
+import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesData;
 import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
@@ -24,7 +25,7 @@ public class TimeSeriesDataDeserializer extends StdDeserializer<TimeSeriesData> 
         node.fieldNames().forEachRemaining(field -> {
             if (!field.equals("date")) {
                 final ReportingMeasure key = ReportingMeasure.fromId(field);
-                final double value = ((DoubleNode) node.get(field)).doubleValue();
+                final double value = ((NumericNode) node.get(field)).doubleValue();
                 data.put(key, value);
             }
         });
