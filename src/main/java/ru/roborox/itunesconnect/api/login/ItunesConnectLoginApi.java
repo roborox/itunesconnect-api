@@ -12,7 +12,6 @@ import org.apache.http.cookie.ClientCookie;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
@@ -61,10 +60,10 @@ public class ItunesConnectLoginApi {
     }
 
     private CookieStore createCookieStore(ConnectTokens tokens) throws MalformedURLException {
-        final CookieStore store = new BasicCookieStore();
-        store.addCookie(createCookie("itctx", tokens.getItctx()));
-        store.addCookie(createCookie("myacinfo", tokens.getMyacinfo()));
-        return store;
+        return new ApiCookieStore(
+                createCookie("itctx", tokens.getItctx()),
+                createCookie("myacinfo", tokens.getMyacinfo())
+        );
     }
 
     private Cookie createCookie(String name, String value) throws MalformedURLException {
