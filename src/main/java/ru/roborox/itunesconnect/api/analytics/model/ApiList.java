@@ -30,4 +30,13 @@ public class ApiList<T> {
     public void setResults(List<T> results) {
         this.results = results;
     }
+
+    @Override
+    public String toString() {
+        if (results != null) {
+            return results.toString();
+        } else {
+            return "[]";
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package ru.roborox.itunesconnect.api.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -13,13 +12,10 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.roborox.itunesconnect.api.Const;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 public class AbstractAppleApi {
     protected final Logger logger = LoggerFactory.getLogger(AbstractAppleApi.class);
@@ -29,15 +25,10 @@ public class AbstractAppleApi {
     private final String url;
     private final boolean log;
 
-    public AbstractAppleApi(Executor executor, String url, String dateFormatString, boolean log) throws MalformedURLException {
+    public AbstractAppleApi(Executor executor, ObjectMapper objectMapper, String url, boolean log) throws MalformedURLException {
         this.url = url;
         this.log = log;
-
-        this.objectMapper = new ObjectMapper();
-        final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        this.objectMapper.setDateFormat(dateFormat);
-        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.objectMapper = objectMapper;
         this.executor = executor;
     }
 

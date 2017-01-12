@@ -27,4 +27,12 @@ public class ContentProvider {
     public void setProviderName(String providerName) {
         this.providerName = providerName;
     }
+
+    @Override
+    public String toString() {
+        return "ContentProvider{" +
+                "providerId='" + providerId + '\'' +
+                ", providerName='" + providerName + '\'' +
+                '}';
+    }
 }

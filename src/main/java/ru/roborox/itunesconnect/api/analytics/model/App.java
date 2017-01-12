@@ -86,4 +86,13 @@ public class App {
     public void setAppOptInRate(int appOptInRate) {
         this.appOptInRate = appOptInRate;
     }
+
+    @Override
+    public String toString() {
+        return "App{" +
+                "name='" + name + '\'' +
+                ", adamId='" + adamId + '\'' +
+                ", bundle=" + bundle +
+                '}';
+    }
 }

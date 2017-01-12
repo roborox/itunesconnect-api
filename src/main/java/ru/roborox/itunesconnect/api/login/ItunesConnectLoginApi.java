@@ -1,30 +1,19 @@
 package ru.roborox.itunesconnect.api.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.cookie.ClientCookie;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
-import ru.roborox.itunesconnect.api.Const;
 import ru.roborox.itunesconnect.api.analytics.model.AuthServiceConfig;
 import ru.roborox.itunesconnect.api.analytics.model.SigninRequest;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
+
+import static ru.roborox.itunesconnect.api.common.Utils.createExecutor;
 
 public class ItunesConnectLoginApi {
     public static final String SIGNIN_PATH = "/auth/signin";
@@ -52,28 +41,6 @@ public class ItunesConnectLoginApi {
         }
     }
 
-    public Executor createExecutor(ConnectTokens tokens) throws MalformedURLException {
-        @SuppressWarnings("deprecation") final Registry<CookieSpecProvider> cookieSpecRegistry =
-                RegistryBuilder.<CookieSpecProvider>create().register(CookieSpecs.DEFAULT, new BrowserCompatSpecFactory()).build();
-        final CloseableHttpClient client = HttpClients.custom().setDefaultCookieSpecRegistry(cookieSpecRegistry).build();
-        return Executor.newInstance(client).use(createCookieStore(tokens));
-    }
-
-    private CookieStore createCookieStore(ConnectTokens tokens) throws MalformedURLException {
-        return new ApiCookieStore(
-                createCookie("itctx", tokens.getItctx()),
-                createCookie("myacinfo", tokens.getMyacinfo())
-        );
-    }
-
-    private Cookie createCookie(String name, String value) throws MalformedURLException {
-        final BasicClientCookie cookie = new BasicClientCookie(name, value);
-        cookie.setAttribute(ClientCookie.DOMAIN_ATTR, Const.COOKIE_DOMAIN);
-        cookie.setPath("/");
-        cookie.setDomain(Const.COOKIE_DOMAIN);
-        return cookie;
-    }
-
     private void connect(Executor executor, String login, String password) throws IOException, URISyntaxException {
         final AuthServiceConfig config = getConfig(executor);
         signin(executor, config.getAuthServiceUrl(), config.getAuthServiceKey(), login, password);
@@ -92,12 +59,5 @@ public class ItunesConnectLoginApi {
     private AuthServiceConfig getConfig(Executor executor) throws URISyntaxException, IOException {
         final URI configUrl = new URIBuilder(olympusUrl + APP_CONFIG_PATH).addParameter("hostname", itunesConnectHostname).build();
         return objectMapper.readValue(executor.execute(Request.Get(configUrl)).returnContent().asString(), AuthServiceConfig.class);
-    }
-
-    private Executor createExecutor(CookieStore cookieStore) {
-        @SuppressWarnings("deprecation") final Registry<CookieSpecProvider> cookieSpecRegistry =
-                RegistryBuilder.<CookieSpecProvider>create().register(CookieSpecs.DEFAULT, new BrowserCompatSpecFactory()).build();
-        final CloseableHttpClient client = HttpClients.custom().setDefaultCookieSpecRegistry(cookieSpecRegistry).setDefaultCookieStore(cookieStore).build();
-        return Executor.newInstance(client);
     }
 }

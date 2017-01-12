@@ -74,4 +74,17 @@ public class UserInfo {
     public void setContentProviders(List<ContentProvider> contentProviders) {
         this.contentProviders = contentProviders;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userDisplayName='" + userDisplayName + '\'' +
+                ", providerId='" + providerId + '\'' +
+                ", providerName='" + providerName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", contentProviders=" + contentProviders +
+                '}';
+    }
 }
