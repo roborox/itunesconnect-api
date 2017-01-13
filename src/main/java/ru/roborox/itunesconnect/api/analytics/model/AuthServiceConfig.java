@@ -4,6 +4,15 @@ public class AuthServiceConfig {
     private String authServiceKey;
     private String authServiceUrl;
 
+    public AuthServiceConfig() {
+    }
+
+    public AuthServiceConfig(String authServiceKey, String authServiceUrl) {
+
+        this.authServiceKey = authServiceKey;
+        this.authServiceUrl = authServiceUrl;
+    }
+
     public String getAuthServiceKey() {
         return authServiceKey;
     }

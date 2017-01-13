@@ -1,4 +1,4 @@
-package ru.roborox.itunesconnect.api.analytics.deserializer;
+package ru.roborox.itunesconnect.api.analytics.serialize;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.TreeNode;

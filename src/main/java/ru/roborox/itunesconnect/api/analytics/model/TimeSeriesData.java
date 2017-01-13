@@ -1,5 +1,6 @@
 package ru.roborox.itunesconnect.api.analytics.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TimeSeriesData {
@@ -11,11 +12,11 @@ public class TimeSeriesData {
     public TimeSeriesData() {
     }
 
-    public TimeSeriesData(String adamId, boolean meetsThreshold, TimeSeriesDataGroup group, List<TimeSeriesItem> data) {
+    public TimeSeriesData(String adamId, boolean meetsThreshold, TimeSeriesDataGroup group, TimeSeriesItem... data) {
         this.adamId = adamId;
         this.meetsThreshold = meetsThreshold;
         this.group = group;
-        this.data = data;
+        this.data = Arrays.asList(data);
     }
 
     public String getAdamId() {

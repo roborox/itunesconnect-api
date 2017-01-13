@@ -16,7 +16,7 @@ import static ru.roborox.itunesconnect.api.common.Utils.*;
  * analytics.itunes.apple.com java api
  */
 public class ItunesAnalyticsApi extends AbstractAppleApi {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    public static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
         objectMapper.setDateFormat(createDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));

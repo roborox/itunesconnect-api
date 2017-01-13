@@ -14,8 +14,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import ru.roborox.itunesconnect.api.Const;
-import ru.roborox.itunesconnect.api.common.serialization.ThreadSafeDateFormat;
-import ru.roborox.itunesconnect.api.login.ApiCookieStore;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
 
 import java.text.DateFormat;
@@ -31,13 +29,6 @@ public class Utils {
                 .setDefaultCookieStore(cookieStore)
                 .build();
         return Executor.newInstance(client);
-    }
-
-    public static CookieStore createApiCookieStore(ConnectTokens tokens) {
-        return new ApiCookieStore(
-                createCookie("itctx", tokens.getItctx()),
-                createCookie("myacinfo", tokens.getMyacinfo())
-        );
     }
 
     public static CookieStore createBasicCookieStore(ConnectTokens tokens) {
@@ -58,7 +49,6 @@ public class Utils {
     public static DateFormat createDateFormat(String pattern) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        //return new ThreadSafeDateFormat(dateFormat);
         return dateFormat;
     }
 }

@@ -1,12 +1,15 @@
 package ru.roborox.itunesconnect.api.analytics.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ru.roborox.itunesconnect.api.analytics.deserializer.TimeSeriesItemDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ru.roborox.itunesconnect.api.analytics.serialize.TimeSeriesItemDeserializer;
 import ru.roborox.itunesconnect.api.analytics.model.enums.Measure;
+import ru.roborox.itunesconnect.api.analytics.serialize.TimeSeriesItemSerializer;
 
 import java.util.Date;
 
 @JsonDeserialize(using = TimeSeriesItemDeserializer.class)
+@JsonSerialize(using = TimeSeriesItemSerializer.class)
 public class TimeSeriesItem {
     private Date date;
     private Measure measure;

@@ -20,7 +20,8 @@ public class ItunesConnectLoginApi {
     public static final String APP_CONFIG_PATH = "/app/config";
     public static final String SESSION_PATH = "/session";
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    public static final ObjectMapper objectMapper = new ObjectMapper();
+
     private final String itunesConnectHostname;
     private final String olympusUrl;
 
