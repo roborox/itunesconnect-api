@@ -51,4 +51,26 @@ public class TimeSeriesGroup {
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimeSeriesGroup that = (TimeSeriesGroup) o;
+
+        if (limit != that.limit) return false;
+        if (metric != that.metric) return false;
+        if (dimension != that.dimension) return false;
+        return rank == that.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = metric != null ? metric.hashCode() : 0;
+        result = 31 * result + (dimension != null ? dimension.hashCode() : 0);
+        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        result = 31 * result + limit;
+        return result;
+    }
 }
