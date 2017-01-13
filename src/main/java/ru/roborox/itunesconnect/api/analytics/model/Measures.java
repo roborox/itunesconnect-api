@@ -1,13 +1,13 @@
 package ru.roborox.itunesconnect.api.analytics.model;
 
-import ru.roborox.itunesconnect.api.analytics.model.enums.AnalyticsMeasure;
+import ru.roborox.itunesconnect.api.analytics.model.enums.Measure;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Measures {
     private String adamId;
-    private AnalyticsMeasure measure;
+    private Measure measure;
     private double total;
     private String type;
     private double previousTotal;
@@ -18,7 +18,7 @@ public class Measures {
     public Measures() {
     }
 
-    public Measures(AnalyticsMeasure measure, MeasuresData... data) {
+    public Measures(Measure measure, MeasuresData... data) {
         this.measure = measure;
         this.data = Arrays.asList(data);
     }
@@ -31,11 +31,11 @@ public class Measures {
         this.adamId = adamId;
     }
 
-    public AnalyticsMeasure getMeasure() {
+    public Measure getMeasure() {
         return measure;
     }
 
-    public void setMeasure(AnalyticsMeasure measure) {
+    public void setMeasure(Measure measure) {
         this.measure = measure;
     }
 

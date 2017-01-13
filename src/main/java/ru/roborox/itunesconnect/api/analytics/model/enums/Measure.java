@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public enum AnalyticsMeasure {
+public enum Measure {
     SALES("sales"),
     PAGE_VIEW_UNIQUE("pageViewUnique"),
     IMPRESSIONS_TOTAL_UNIQUE("impressionsTotalUnique"),
@@ -20,15 +20,15 @@ public enum AnalyticsMeasure {
     PAYING_USERS("payingUsers");
 
     private final String id;
-    private static final Map<String, AnalyticsMeasure> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(AnalyticsMeasure::getId, e -> e));
+    private static final Map<String, Measure> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(Measure::getId, e -> e));
 
-    AnalyticsMeasure(String id) {
+    Measure(String id) {
         this.id = id;
     }
 
     @JsonCreator
-    public static AnalyticsMeasure fromId(String id) {
-        final AnalyticsMeasure result = ID_MAP.get(id);
+    public static Measure fromId(String id) {
+        final Measure result = ID_MAP.get(id);
         if (result == null) {
             throw new IllegalArgumentException("id " + id + " not supported");
         }

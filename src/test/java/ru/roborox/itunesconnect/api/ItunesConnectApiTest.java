@@ -4,8 +4,8 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.roborox.itunesconnect.api.analytics.model.*;
-import ru.roborox.itunesconnect.api.analytics.model.enums.AnalyticsDimension;
-import ru.roborox.itunesconnect.api.analytics.model.enums.AnalyticsMeasure;
+import ru.roborox.itunesconnect.api.analytics.model.enums.Dimension;
+import ru.roborox.itunesconnect.api.analytics.model.enums.Measure;
 import ru.roborox.itunesconnect.api.analytics.model.enums.Period;
 import ru.roborox.itunesconnect.api.common.Sort;
 
@@ -32,11 +32,11 @@ public class ItunesConnectApiTest extends AbstractItunesConnectApiTest {
     @Test
     public void getAnalyticsForAllApps() throws IOException {
         forEachApp(app -> {
-            final MeasuresResponse response = getAnalyticsApi().getMeasures(new MeasuresRequest(app.getAdamId(), Period.DAY, AnalyticsMeasure.values(), start, end));
+            final MeasuresResponse response = getAnalyticsApi().getMeasures(new MeasuresRequest(app.getAdamId(), Period.DAY, Measure.values(), start, end));
             System.out.println(response.getResults());
 
-            for (AnalyticsMeasure measure : AnalyticsMeasure.values()) {
-                final TimeSeriesGroup group = new TimeSeriesGroup(measure, AnalyticsDimension.TERRITORY, Sort.ASCENDING, 3);
+            for (Measure measure : Measure.values()) {
+                final TimeSeriesGroup group = new TimeSeriesGroup(measure, Dimension.TERRITORY, Sort.ASCENDING, 3);
                 final TimeSeriesResponse byTerritory = getAnalyticsApi().getTimeSeries(new TimeSeriesRequest(app.getAdamId(), Period.DAY, measure, start, end, group));
                 if (byTerritory.getResults() != null) {
                     assertEquals(byTerritory.getSize(), byTerritory.getResults().size());
