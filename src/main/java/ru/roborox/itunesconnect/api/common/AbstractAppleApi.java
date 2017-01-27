@@ -20,10 +20,10 @@ import java.net.MalformedURLException;
 public class AbstractAppleApi {
     protected final Logger logger = LoggerFactory.getLogger(AbstractAppleApi.class);
 
-    private final ObjectMapper objectMapper;
-    private final Executor executor;
-    private final String url;
-    private final boolean log;
+    protected final ObjectMapper objectMapper;
+    protected final Executor executor;
+    protected final String url;
+    protected final boolean log;
 
     public AbstractAppleApi(Executor executor, ObjectMapper objectMapper, String url, boolean log) throws MalformedURLException {
         this.url = url;
@@ -42,12 +42,19 @@ public class AbstractAppleApi {
         InputStream in = null;
         try {
             entity = response.getEntity();
-            in = entity.getContent();
-            final String content = IOUtils.toString(in, "UTF-8");
-            if (log) {
-                logger.info("request={} response={} content={}", request, response, content);
+            if (entity != null) {
+                in = entity.getContent();
+                final String content = IOUtils.toString(in, "UTF-8");
+                if (log) {
+                    logger.info("request={} response={} content={}", request, response, content);
+                }
+                return content;
+            } else {
+                if (log) {
+                    logger.info("request={} response={} content=none", request, response);
+                }
+                return null;
             }
-            return content;
         } finally {
             IOUtils.closeQuietly(in);
             EntityUtils.consumeQuietly(entity);

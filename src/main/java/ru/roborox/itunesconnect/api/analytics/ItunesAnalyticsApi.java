@@ -23,8 +23,8 @@ public class ItunesAnalyticsApi extends AbstractAppleApi {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public ItunesAnalyticsApi(ConnectTokens tokens, String analyticsUrl, boolean log) throws MalformedURLException {
-        super(createExecutor(createBasicCookieStore(tokens)), objectMapper, analyticsUrl, log);
+    public ItunesAnalyticsApi(ConnectTokens tokens, String url, boolean log) throws MalformedURLException {
+        super(createExecutor(createBasicCookieStore(tokens)), objectMapper, url, log);
     }
 
     public UserInfo getUserInfo() throws IOException {
@@ -33,10 +33,6 @@ public class ItunesAnalyticsApi extends AbstractAppleApi {
 
     public AppResponse getApps() throws IOException {
         return execute(get("/app-info/app"), AppResponse.class);
-    }
-
-    public void setProvider(String providerId) throws IOException {
-        execute(get("/settings/provider/" + providerId));
     }
 
     public MeasuresResponse getMeasures(MeasuresRequest request) throws IOException {

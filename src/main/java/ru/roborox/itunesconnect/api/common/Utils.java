@@ -14,11 +14,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import ru.roborox.itunesconnect.api.Const;
+import ru.roborox.itunesconnect.api.login.NotRecordingCookieStore;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 public class Utils {
     public static Executor createExecutor(CookieStore cookieStore) {
@@ -38,6 +38,13 @@ public class Utils {
         return store;
     }
 
+    public static CookieStore createNotRecordingCookieStore(ConnectTokens tokens) {
+        return new NotRecordingCookieStore(
+                createCookie("itctx", tokens.getItctx()),
+                createCookie("myacinfo", tokens.getMyacinfo())
+        );
+    }
+
     public static Cookie createCookie(String name, String value) {
         final BasicClientCookie cookie = new BasicClientCookie(name, value);
         cookie.setAttribute(ClientCookie.DOMAIN_ATTR, Const.COOKIE_DOMAIN);
@@ -48,7 +55,7 @@ public class Utils {
 
     public static DateFormat createDateFormat(String pattern) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        dateFormat.setTimeZone(Const.TIME_ZONE_UTC);
         return dateFormat;
     }
 }
