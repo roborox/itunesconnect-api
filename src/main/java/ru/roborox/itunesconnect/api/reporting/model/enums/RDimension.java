@@ -3,7 +3,7 @@ package ru.roborox.itunesconnect.api.reporting.model.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Dimension {
+public enum RDimension {
     CONTENT,
     PIANO_LOCATION,
     VERSION_DESC_PIANO;
@@ -14,7 +14,7 @@ public enum Dimension {
     }
 
     @JsonCreator
-    public static Dimension fromId(String id) {
+    public static RDimension fromId(String id) {
         return valueOf(id.toUpperCase());
     }
 }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.roborox.itunesconnect.api.common.AbstractAppleApi;
 import ru.roborox.itunesconnect.api.login.ConnectTokens;
-import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesRequest;
-import ru.roborox.itunesconnect.api.reporting.model.TimeSeriesResponse;
+import ru.roborox.itunesconnect.api.reporting.model.RTimeSeriesRequest;
+import ru.roborox.itunesconnect.api.reporting.model.RTimeSeriesResponse;
 import ru.roborox.itunesconnect.api.reporting.model.UserInfo;
 
 import java.io.IOException;
@@ -24,8 +24,8 @@ public class ReportingApi extends AbstractAppleApi {
         super(createExecutor(createNotRecordingCookieStore(tokens)), objectMapper, url, log);
     }
 
-    public TimeSeriesResponse getTimeSeries(TimeSeriesRequest request) throws IOException {
-        final TimeSeriesResponse[] result = execute(post("/data/timeseries", request), TimeSeriesResponse[].class);
+    public RTimeSeriesResponse getTimeSeries(RTimeSeriesRequest request) throws IOException {
+        final RTimeSeriesResponse[] result = execute(post("/data/timeseries", request), RTimeSeriesResponse[].class);
         if (result.length > 0) {
             return result[0];
         } else {

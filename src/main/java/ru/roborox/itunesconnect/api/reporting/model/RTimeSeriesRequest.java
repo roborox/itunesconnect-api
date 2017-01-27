@@ -2,24 +2,27 @@ package ru.roborox.itunesconnect.api.reporting.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.roborox.itunesconnect.api.common.Sort;
-import ru.roborox.itunesconnect.api.reporting.model.enums.Dimension;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
 import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
-import ru.roborox.itunesconnect.api.reporting.model.enums.ReportingMeasure;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasure;
 
 import java.util.Arrays;
 import java.util.Date;
 
-public class TimeSeriesRequest {
+public class RTimeSeriesRequest {
     private Interval interval;
-    private Dimension group;
+    private RDimension group;
     private Date startDate;
     private Date endDate;
     private Sort sort;
     private int limit;
-    private ReportingMeasure[] measures;
-    private TimeSeriesFilter[] filters;
+    private RMeasure[] measures;
+    private RTimeSeriesFilter[] filters;
 
-    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, ReportingMeasure[] measures, TimeSeriesFilter[] filters) {
+    public RTimeSeriesRequest() {
+    }
+
+    public RTimeSeriesRequest(Interval interval, RDimension group, Date startDate, Date endDate, Sort sort, int limit, RMeasure[] measures, RTimeSeriesFilter[] filters) {
         this.interval = interval;
         this.group = group;
         this.startDate = startDate;
@@ -30,23 +33,23 @@ public class TimeSeriesRequest {
         this.filters = filters;
     }
 
-    public TimeSeriesRequest(Interval interval, Dimension group, Date startDate, Date endDate, Sort sort, int limit, TimeSeriesFilter filter, ReportingMeasure... measures) {
-        this(interval, group, startDate, endDate, sort, limit, measures, new TimeSeriesFilter[]{filter});
+    public RTimeSeriesRequest(Interval interval, RDimension group, Date startDate, Date endDate, Sort sort, int limit, RTimeSeriesFilter filter, RMeasure... measures) {
+        this(interval, group, startDate, endDate, sort, limit, measures, new RTimeSeriesFilter[]{filter});
     }
 
-    public Dimension getGroup() {
+    public RDimension getGroup() {
         return group;
     }
 
-    public void setGroup(Dimension group) {
+    public void setGroup(RDimension group) {
         this.group = group;
     }
 
-    public TimeSeriesFilter[] getFilters() {
+    public RTimeSeriesFilter[] getFilters() {
         return filters;
     }
 
-    public void setFilters(TimeSeriesFilter[] filters) {
+    public void setFilters(RTimeSeriesFilter[] filters) {
         this.filters = filters;
     }
 
@@ -92,11 +95,11 @@ public class TimeSeriesRequest {
         this.limit = limit;
     }
 
-    public ReportingMeasure[] getMeasures() {
+    public RMeasure[] getMeasures() {
         return measures;
     }
 
-    public void setMeasures(ReportingMeasure[] measures) {
+    public void setMeasures(RMeasure[] measures) {
         this.measures = measures;
     }
 
@@ -105,7 +108,7 @@ public class TimeSeriesRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TimeSeriesRequest that = (TimeSeriesRequest) o;
+        RTimeSeriesRequest that = (RTimeSeriesRequest) o;
 
         if (limit != that.limit) return false;
         if (interval != that.interval) return false;

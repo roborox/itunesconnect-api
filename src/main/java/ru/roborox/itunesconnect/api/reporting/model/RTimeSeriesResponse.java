@@ -2,9 +2,9 @@ package ru.roborox.itunesconnect.api.reporting.model;
 
 import java.util.Arrays;
 
-public class TimeSeriesResponse {
+public class RTimeSeriesResponse {
     private TimeSeriesMetadata metadata;
-    private TimeSeriesData[] data;
+    private RTimeSeriesData[] data;
 
     public TimeSeriesMetadata getMetadata() {
         return metadata;
@@ -14,17 +14,17 @@ public class TimeSeriesResponse {
         this.metadata = metadata;
     }
 
-    public TimeSeriesData[] getData() {
+    public RTimeSeriesData[] getData() {
         return data;
     }
 
-    public void setData(TimeSeriesData[] data) {
+    public void setData(RTimeSeriesData[] data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "TimeSeriesResponse{" +
+        return "RTimeSeriesResponse{" +
                 "data=" + Arrays.toString(data) +
                 '}';
     }

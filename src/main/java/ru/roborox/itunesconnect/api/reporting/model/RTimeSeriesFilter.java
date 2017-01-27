@@ -1,25 +1,28 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.roborox.itunesconnect.api.reporting.model.enums.Dimension;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
 
 import java.util.Arrays;
 
-public class TimeSeriesFilter {
-    private Dimension dimensionKey;
+public class RTimeSeriesFilter {
+    private RDimension dimensionKey;
     private String[] optionKeys;
 
-    public TimeSeriesFilter(Dimension dimensionKey, String... optionKeys) {
+    public RTimeSeriesFilter() {
+    }
+
+    public RTimeSeriesFilter(RDimension dimensionKey, String... optionKeys) {
         this.dimensionKey = dimensionKey;
         this.optionKeys = optionKeys;
     }
 
     @JsonProperty("dimension_key")
-    public Dimension getDimensionKey() {
+    public RDimension getDimensionKey() {
         return dimensionKey;
     }
 
-    public void setDimensionKey(Dimension dimensionKey) {
+    public void setDimensionKey(RDimension dimensionKey) {
         this.dimensionKey = dimensionKey;
     }
 
@@ -37,7 +40,7 @@ public class TimeSeriesFilter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TimeSeriesFilter that = (TimeSeriesFilter) o;
+        RTimeSeriesFilter that = (RTimeSeriesFilter) o;
 
         if (dimensionKey != that.dimensionKey) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
