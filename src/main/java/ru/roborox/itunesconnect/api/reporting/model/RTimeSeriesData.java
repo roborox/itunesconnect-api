@@ -1,13 +1,16 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ru.roborox.itunesconnect.api.reporting.deserializer.RTimeSeriesDataDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataDeserializer;
 import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasure;
+import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataSerializer;
 
 import java.util.Date;
 import java.util.Map;
 
 @JsonDeserialize(using = RTimeSeriesDataDeserializer.class)
+@JsonSerialize(using = RTimeSeriesDataSerializer.class)
 public class RTimeSeriesData {
     private Date date;
     private Map<RMeasure, Double> data;
