@@ -7,20 +7,20 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public enum RMeasure {
+public enum RMeasureType {
     ROYALTY("Royalty"),
     ROYALTY_UTC("Royalty_utc");
 
     private final String id;
-    private static final Map<String, RMeasure> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(RMeasure::getId, e -> e));
+    private static final Map<String, RMeasureType> ID_MAP = Arrays.stream(values()).collect(Collectors.toMap(RMeasureType::getId, e -> e));
 
-    RMeasure(String id) {
+    RMeasureType(String id) {
         this.id = id;
     }
 
     @JsonCreator
-    public static RMeasure fromId(String id) {
-        final RMeasure result = ID_MAP.get(id);
+    public static RMeasureType fromId(String id) {
+        final RMeasureType result = ID_MAP.get(id);
         if (result == null) {
             throw new IllegalArgumentException("id " + id + " not supported");
         }

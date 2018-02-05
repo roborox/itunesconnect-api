@@ -1,9 +1,8 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
-
 import java.util.Arrays;
+
+import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
 
 public class RTimeSeriesFilter {
     private RDimension dimensionKey;
@@ -17,7 +16,6 @@ public class RTimeSeriesFilter {
         this.optionKeys = optionKeys;
     }
 
-    @JsonProperty("dimension_key")
     public RDimension getDimensionKey() {
         return dimensionKey;
     }
@@ -26,7 +24,6 @@ public class RTimeSeriesFilter {
         this.dimensionKey = dimensionKey;
     }
 
-    @JsonProperty("option_keys")
     public String[] getOptionKeys() {
         return optionKeys;
     }

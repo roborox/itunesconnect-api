@@ -1,47 +1,84 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.roborox.itunesconnect.api.common.Sort;
-import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
-import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
-import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasure;
-
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
+
+import ru.roborox.itunesconnect.api.reporting.model.enums.CubeApiType;
+import ru.roborox.itunesconnect.api.reporting.model.enums.Interval;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RDimension;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasureType;
+import ru.roborox.itunesconnect.api.reporting.model.enums.RSort;
 
 public class RTimeSeriesRequest {
-    private Interval interval;
-    private RDimension group;
-    private Date startDate;
-    private Date endDate;
-    private Sort sort;
+    private CubeApiType cubeApiType = CubeApiType.TIMESERIES;
+    private RPeriod interval;
+    private RDimension[] group;
+    private RSort sorting;
     private int limit;
     private RMeasure[] measures;
     private RTimeSeriesFilter[] filters;
+    private String[] order = new String[0];
+    private Map<String, Object> optionalParams = Collections.EMPTY_MAP;
 
     public RTimeSeriesRequest() {
     }
 
-    public RTimeSeriesRequest(Interval interval, RDimension group, Date startDate, Date endDate, Sort sort, int limit, RMeasure[] measures, RTimeSeriesFilter[] filters) {
+    public RTimeSeriesRequest(RPeriod interval, RDimension[] group, RSort sorting, int limit, RMeasure[] measures,
+            RTimeSeriesFilter[] filters) {
         this.interval = interval;
         this.group = group;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.sort = sort;
+        this.sorting = sorting;
         this.limit = limit;
         this.measures = measures;
         this.filters = filters;
     }
 
-    public RTimeSeriesRequest(Interval interval, RDimension group, Date startDate, Date endDate, Sort sort, int limit, RTimeSeriesFilter filter, RMeasure... measures) {
-        this(interval, group, startDate, endDate, sort, limit, measures, new RTimeSeriesFilter[]{filter});
+    public RTimeSeriesRequest(Interval interval, RDimension group, Date startDate, Date endDate, RSort sort, int limit,
+            RTimeSeriesFilter filter, RMeasureType... measures) {
+        this(new RPeriod(interval, startDate, endDate), new RDimension[] { group }, sort, limit,
+                Arrays.stream(measures).map(RMeasure::new).toArray(RMeasure[]::new),
+                new RTimeSeriesFilter[] { filter });
     }
 
-    public RDimension getGroup() {
+    public CubeApiType getCubeApiType() {
+        return cubeApiType;
+    }
+
+    public void setCubeApiType(CubeApiType cubeApiType) {
+        this.cubeApiType = cubeApiType;
+    }
+
+    public RSort getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(RSort sorting) {
+        this.sorting = sorting;
+    }
+
+    public Map<String, Object> getOptionalParams() {
+        return optionalParams;
+    }
+
+    public void setOptionalParams(Map<String, Object> optionalParams) {
+        this.optionalParams = optionalParams;
+    }
+
+    public String[] getOrder() {
+        return order;
+    }
+
+    public void setOrder(String[] order) {
+        this.order = order;
+    }
+
+    public RDimension[] getGroup() {
         return group;
     }
 
-    public void setGroup(RDimension group) {
+    public void setGroup(RDimension[] group) {
         this.group = group;
     }
 
@@ -53,38 +90,12 @@ public class RTimeSeriesRequest {
         this.filters = filters;
     }
 
-    public Interval getInterval() {
+    public RPeriod getInterval() {
         return interval;
     }
 
-    public void setInterval(Interval interval) {
+    public void setInterval(RPeriod interval) {
         this.interval = interval;
-    }
-
-    @JsonProperty("start_date")
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    @JsonProperty("end_date")
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Sort getSort() {
-        return sort;
-    }
-
-    public void setSort(Sort sort) {
-        this.sort = sort;
     }
 
     public int getLimit() {
@@ -104,34 +115,54 @@ public class RTimeSeriesRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RTimeSeriesRequest that = (RTimeSeriesRequest) o;
-
-        if (limit != that.limit) return false;
-        if (interval != that.interval) return false;
-        if (group != that.group) return false;
-        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-        if (sort != that.sort) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(measures, that.measures)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(filters, that.filters);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cubeApiType == null) ? 0 : cubeApiType.hashCode());
+        result = prime * result + Arrays.hashCode(filters);
+        result = prime * result + Arrays.hashCode(group);
+        result = prime * result + ((interval == null) ? 0 : interval.hashCode());
+        result = prime * result + limit;
+        result = prime * result + Arrays.hashCode(measures);
+        result = prime * result + ((optionalParams == null) ? 0 : optionalParams.hashCode());
+        result = prime * result + Arrays.hashCode(order);
+        result = prime * result + ((sorting == null) ? 0 : sorting.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        int result = interval != null ? interval.hashCode() : 0;
-        result = 31 * result + (group != null ? group.hashCode() : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (sort != null ? sort.hashCode() : 0);
-        result = 31 * result + limit;
-        result = 31 * result + Arrays.hashCode(measures);
-        result = 31 * result + Arrays.hashCode(filters);
-        return result;
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RTimeSeriesRequest other = (RTimeSeriesRequest) obj;
+        if (cubeApiType != other.cubeApiType)
+            return false;
+        if (!Arrays.equals(filters, other.filters))
+            return false;
+        if (!Arrays.equals(group, other.group))
+            return false;
+        if (interval == null) {
+            if (other.interval != null)
+                return false;
+        } else if (!interval.equals(other.interval))
+            return false;
+        if (limit != other.limit)
+            return false;
+        if (!Arrays.equals(measures, other.measures))
+            return false;
+        if (optionalParams == null) {
+            if (other.optionalParams != null)
+                return false;
+        } else if (!optionalParams.equals(other.optionalParams))
+            return false;
+        if (!Arrays.equals(order, other.order))
+            return false;
+        if (sorting != other.sorting)
+            return false;
+        return true;
     }
 }

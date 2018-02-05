@@ -1,31 +1,44 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class RTimeSeriesResponse {
-    private TimeSeriesMetadata metadata;
-    private RTimeSeriesData[] data;
+    private String status;
+    private String requestId;
+    private Map<String, Object> meta;
+    private List<RTimeSeries> result;
 
-    public TimeSeriesMetadata getMetadata() {
-        return metadata;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMetadata(TimeSeriesMetadata metadata) {
-        this.metadata = metadata;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public RTimeSeriesData[] getData() {
-        return data;
+    public String getRequestId() {
+        return requestId;
     }
 
-    public void setData(RTimeSeriesData[] data) {
-        this.data = data;
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
-    @Override
-    public String toString() {
-        return "RTimeSeriesResponse{" +
-                "data=" + Arrays.toString(data) +
-                '}';
+    public Map<String, Object> getMeta() {
+        return meta;
     }
+
+    public void setMeta(Map<String, Object> meta) {
+        this.meta = meta;
+    }
+
+    public List<RTimeSeries> getResult() {
+        return result;
+    }
+
+    public void setResult(List<RTimeSeries> result) {
+        this.result = result;
+    }
+
 }

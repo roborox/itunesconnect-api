@@ -1,45 +1,46 @@
 package ru.roborox.itunesconnect.api.reporting.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataDeserializer;
-import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasure;
-import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataSerializer;
-
 import java.util.Date;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import ru.roborox.itunesconnect.api.reporting.model.enums.RMeasureType;
+import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataDeserializer;
+import ru.roborox.itunesconnect.api.reporting.serialize.RTimeSeriesDataSerializer;
 
 @JsonDeserialize(using = RTimeSeriesDataDeserializer.class)
 @JsonSerialize(using = RTimeSeriesDataSerializer.class)
 public class RTimeSeriesData {
-    private Date date;
-    private Map<RMeasure, Double> data;
+    private Date day;
+    private Map<RMeasureType, Double> data;
 
-    public RTimeSeriesData(Date date, Map<RMeasure, Double> data) {
-        this.date = date;
+    public RTimeSeriesData(Date day, Map<RMeasureType, Double> data) {
+        this.day = day;
         this.data = data;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDay() {
+        return day;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDay(Date day) {
+        this.day = day;
     }
 
-    public Map<RMeasure, Double> getData() {
+    public Map<RMeasureType, Double> getData() {
         return data;
     }
 
-    public void setData(Map<RMeasure, Double> data) {
+    public void setData(Map<RMeasureType, Double> data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
         return "RTimeSeriesData{" +
-                "date=" + date +
+                "day=" + day +
                 ", data=" + data +
                 '}';
     }
